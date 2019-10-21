@@ -6,8 +6,8 @@ import scrape
 @sw.route("/")
 @sw.route("/index")
 def index():
+    room = "Storytime Room"
     date = scrape.get_assabet_date()
-    mevents = scrape.get_month_events()
-    tevents = scrape.get_todays_events(date, mevents)
-    revents = scrape.get_events_in_room("Community Meeting Room", tevents)
-    return render_template("cmr.html", today=date, events=revents)
+    events = scrape.get_events_now(room)
+    # TODO: Don't display canceled events
+    return render_template("cmr.html", room=room, today=date, events=events)
