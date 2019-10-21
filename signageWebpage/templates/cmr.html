@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AHPL Community Meeting Room</title>
+</head>
+<body>
+    <h1>Events in the Community Meeting Room today: {{ today }}</h1>
+
+    <table id="eventTable">
+        <tr>
+            <th>Event Title</th>
+            <th>Event Time</th>
+        </tr>
+        {% for event in events %}
+        <tr>
+            <td>{{ event.eventName }}</td>
+            <td>{{ event.eventTime }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
