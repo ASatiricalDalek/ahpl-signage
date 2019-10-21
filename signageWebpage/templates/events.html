@@ -9,7 +9,11 @@
     <h1>Events in the {{ room }} today: </h1>
     <br>
     <h1 id="date">{{ today }}</h1>
-    <table id="eventTable">
+    <br>
+    {% if noEvents %}
+        <h2>{{ noEvents }}</h2>
+    {% else %}
+        <table id="eventTable">
         <tr>
             <th>Event Title</th>
             <th>Event Time</th>
@@ -20,6 +24,7 @@
             <td>{{ event.eventTime }}</td>
         </tr>
         {% endfor %}
-    </table>
+        </table>
+    {% endif %}
 </body>
 </html>

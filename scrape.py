@@ -12,6 +12,7 @@ def get_assabet_date():
 
 
 def get_assabet_month_year():
+    # the month and year is used in the URL to determine which month we want to scrape
     today = datetime.datetime.now()
     month = today.strftime("%B")
     year = today.year
@@ -20,6 +21,7 @@ def get_assabet_month_year():
 
 def get_month_events(month, year):
     # Get the event listing page for the current month and year
+    # We get the year and month from the get_assabet_month_year function, or pass arbitrarily
     url = "https://auburn-hills.assabetinteractive.com/calendar/{}-{}/event-listing/".format(year, month)
     response = requests.get(url)
 
@@ -40,10 +42,13 @@ def get_month_events(month, year):
             thisEvent.eventDate = listing.find('span', class_="event-day").string
             thisEvent.eventTime = listing.find('span', class_="event-time").string
             thisEvent.eventRoom = listing.find('span', class_="event-location-location").string
+            # Add this event to our list of event objects
             events.append(thisEvent)
     return events
 
 
+# Note that today is a string in the same format as Assabet's dates (ex: Tuesday, October 22)
+# Use the get_assabet_date() function to return today's date in this format
 def get_day_events(today, events):
     daysEvents = []
     for event in events:
@@ -84,7 +89,7 @@ def print_events(events):
 
 
 # dt = get_assabet_date()
-# evn = get_month_events()
+# evn = get_month_events("October", "2019")
 # tde = get_todays_events(dt, evn)
 # eir = get_events_in_room("Storytime Room", tde)
 # print_events(eir)
