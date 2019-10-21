@@ -1,4 +1,42 @@
+/*
+AHPL Colors
+Blue: #0298d2
+Red: #db3827
+Orange: #f19238
+Green: #74ac43
+Grey: #333333
+*/
+
+body
+{
+    font-family: Montserrat, sans-serif;
+    background-color: #333333;
+    color: white;
+}
+
+h1
+{
+    text-align: center;
+    font-size: 60px;
+    padding: 0px;
+    margin: 0px;
+}
+th
+{
+  /*text-decoration: underline;*/
+  padding: 10px;
+  padding-bottom: 4px;
+  color: #0298d2;
+    border-bottom: 7px solid #00b0d2;
+}
+td
+{
+    border-bottom: 2px solid #f19238;
+}
+
 #eventTable
 {
     width: 100%;
+    text-align: center;
+    font-size: 48px;
 }

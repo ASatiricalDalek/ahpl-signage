@@ -6,8 +6,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Events in the {{ room }} today: {{ today }}</h1>
-
+    <h1>Events in the {{ room }} today: </h1>
+    <br>
+    <h1 id="date">{{ today }}</h1>
     <table id="eventTable">
         <tr>
             <th>Event Title</th>
