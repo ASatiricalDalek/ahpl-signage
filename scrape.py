@@ -11,15 +11,14 @@ def get_assabet_date():
     return assabetDate
 
 
-def find_link_with_text(tag):
-    h2 = tag.find('h2')
-    return h2
-
-
-def get_month_events():
+def get_assabet_month_year():
     today = datetime.datetime.now()
     month = today.strftime("%B")
     year = today.year
+    return month, year
+
+
+def get_month_events(month, year):
     # Get the event listing page for the current month and year
     url = "https://auburn-hills.assabetinteractive.com/calendar/{}-{}/event-listing/".format(year, month)
     response = requests.get(url)
@@ -32,7 +31,9 @@ def get_month_events():
     events = []
     for listing in eventListings:
         thisEvent = ev()
-        eventName = find_link_with_text(listing)
+        # Event titles are always h2 in the HTML
+        eventName = listing.find('h2')
+        # Create new python event object
         # If eventName is none, there are no events for that day
         if eventName is not None:
             thisEvent.eventName = eventName.string
@@ -43,12 +44,12 @@ def get_month_events():
     return events
 
 
-def get_todays_events(today, events):
-    todaysEvents = []
+def get_day_events(today, events):
+    daysEvents = []
     for event in events:
         if event.eventDate == today:
-            todaysEvents.append(event)
-    return todaysEvents
+            daysEvents.append(event)
+    return daysEvents
 
 
 def get_events_in_room(room, events):
@@ -57,6 +58,17 @@ def get_events_in_room(room, events):
         if event.eventRoom == room:
             roomsEvents.append(event)
     return roomsEvents
+
+
+# "Helper" function to perform the most common use case for the program - getting events for today in specified room
+# Most often, call this function directly
+def get_events_now(room):
+    assabetMonthYear = get_assabet_month_year()
+    assabetDate = get_assabet_date()
+    events = get_month_events(assabetMonthYear[0], assabetMonthYear[1])
+    devents = get_day_events(assabetDate, events)
+    finalEvents = get_events_in_room(room, devents)
+    return finalEvents
 
 
 def print_events(events):
@@ -71,9 +83,13 @@ def print_events(events):
             print("")
 
 
-dt = get_assabet_date()
-evn = get_month_events()
-tde = get_todays_events(dt, evn)
-eir = get_events_in_room("Storytime Room", tde)
-print_events(eir)
+# dt = get_assabet_date()
+# evn = get_month_events()
+# tde = get_todays_events(dt, evn)
+# eir = get_events_in_room("Storytime Room", tde)
+# print_events(eir)
+
+# todayEvents = get_events_now("Community Meeting Room")
+# print_events(todayEvents)
+
 
