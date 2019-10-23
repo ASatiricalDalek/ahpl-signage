@@ -1,7 +1,5 @@
-from signageWebpage import sw
+from signageWebpage import sw, scrape, renderLogic
 from flask import render_template
-import scrape
-import renderLogic
 
 
 @sw.route("/storytime")
@@ -15,7 +13,7 @@ def storytime():
 
 @sw.route("/community")
 def community():
-    room = "Community Meeting Room"
+    room = "Community Room"
     date = scrape.get_assabet_date()
     events = scrape.get_events_now(room)
     noEvents = renderLogic.no_events_check(events)

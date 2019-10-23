@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import datetime
-from event import event as ev
+from signageWebpage.event import event as ev
 
 
 def get_assabet_date():
