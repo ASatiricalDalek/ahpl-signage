@@ -6,7 +6,7 @@ import logging
 
 @sw.route("/storytime")
 def storytime():
-    room = "Storytime Room"
+    room = "Activity Room"
     logging.info("Getting events for " + str(room))
     date = scrape.get_assabet_date()
     logging.info("Event date " + str(date))
@@ -32,7 +32,7 @@ def community():
 
 @sw.route("/small")
 def small():
-    room = "Small Meeting Room"
+    room = "Small Conference Room"
     logging.info("Getting events for " + str(room))
     date = scrape.get_assabet_date()
     logging.info("Event date " + str(date))

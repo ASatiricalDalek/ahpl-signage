@@ -18,7 +18,9 @@ at the Auburn Hills Public Library.
 * Fixed an issue on Linux systems where the leading 0 was not being correctly scrubbed from the date 
 leading to a problem where the screen would not display events for single-diget days
 * Updated documentation 
-* Added logging support to the application, particularly the scrape code  
+* Added logging support to the application, particularly the scrape code
+* Updated Small Meeting room to Small Conference Room to match rebranding
+* Updated Storytime Room to Activity Room to match rebranding  
 
 
 # Prerequisites
