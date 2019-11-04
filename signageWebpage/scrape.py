@@ -11,16 +11,17 @@ if platform.system() == "Windows":
 elif platform.system() == "Linux":
     logging.basicConfig(filename="/var/www/ahpl-signage/flaskdebug.log", level=logging.DEBUG)
 
+
 def get_assabet_date():
     # Assabet displays the date in the "Day, Month Date" format. We get today's date in that format here
     logging.debug("Getting Assabet Friendly date")
     today = datetime.datetime.now()
     # Linux and Windows require different format options to remove the leading zero, so depending on OS choose the
     os = platform.system()
-    if (os == "Windows"):
+    if os == "Windows":
         logging.debug("Windows OS Detected, removing leading 0 according to Win specifications")
         assabetDate = today.strftime("%A") + ", " + today.strftime("%B") + " " + today.strftime("%#d")
-    elif (os == "Linux"):
+    elif os == "Linux":
         logging.debug("Linux OS Detected, removing leading 0 according to Linux specifications")
         assabetDate = today.strftime("%A") + ", " + today.strftime("%B") + " " + today.strftime("%-d")
     logging.debug("Assabet date: " + str(assabetDate))
@@ -66,7 +67,8 @@ def get_month_events(month, year):
             thisEvent.eventDate = listing.find('span', class_="event-day").string
             logging.debug(str(thisEvent.eventDate))
             thisEvent.eventTime = listing.find('span', class_="event-time").string
-            logging.debug(str(thisEvent.eventTime))
+            # This causes formatting issues with the log due to the - character
+            # logging.debug(str(thisEvent.eventTime))
             thisEvent.eventRoom = listing.find('span', class_="event-location-location").string
             logging.debug(str(thisEvent.eventRoom))
             # Add this event to our list of event objects
