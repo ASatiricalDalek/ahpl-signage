@@ -28,6 +28,11 @@ h2
     font-size: 76px;
     color: #c53223;
 }
+h3
+{
+    font-size: 42px;
+    text-align: center;
+}
 th
 {
   /*text-decoration: underline;*/
@@ -38,12 +43,39 @@ th
 }
 td
 {
-    border-bottom: 2px solid #f19238;
+    /* border-bottom: 2px solid #f19238; */
 }
 
-#eventTable
+.eventTable, .wayfindingTable
 {
     width: 100%;
     text-align: center;
     font-size: 48px;
+}
+
+.direction-interior
+{
+    font-family: Montserrat-thin, sans-serif;
+    border: none;
+    text-align: left;
+    padding-left: 300px;
+}
+
+.direction
+{
+    text-align: left;
+    padding-left: 150px;
+    border-top: 2px solid #f19238;
+}
+
+.Arrow
+{
+    font-size: 100px;
+    width: 25%;
+    border-top: 2px solid #f19238;
+}
+
+.Blank
+{
+    border-bottom: none;
 }

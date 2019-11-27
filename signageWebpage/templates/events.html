@@ -8,12 +8,12 @@
 <body>
     <h1>Events in the {{ room }} today: </h1>
     <br>
-    <h1 id="date">{{ today }}</h1>
+    <h1 class="date">{{ today }}</h1>
     <br>
     {% if noEvents %}
         <h2>No Events in this Room Today</h2>
     {% else %}
-        <table id="eventTable">
+        <table class="eventTable">
         <tr>
             <th>Event Title</th>
             <th>Event Time</th>

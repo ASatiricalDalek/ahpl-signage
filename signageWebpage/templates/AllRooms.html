@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AHPL All Events</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h3>Today is {{ today }}</h3>
+    {% if crNoEvents == False %}
+    <h3>Today's Events:</h3>
+    <h1>Community Room (Lower Level): </h1>
+    <br>
+    <table class="eventTable">
+        <tr>
+            <th>Event Title</th>
+            <th>Event Time</th>
+        </tr>
+        {% for crEvent in crEvents %}
+        <tr>
+            <td>{{ crEvent.eventName }}</td>
+            <td>{{ crEvent.eventTime }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    {% if scrNoEvents == False %}
+    <h1>Small Conference Room (Lower Level): </h1>
+    <br>
+    <table class="eventTable">
+        <tr>
+            <th>Event Title</th>
+            <th>Event Time</th>
+        </tr>
+        {% for scrEvent in scrEvents %}
+        <tr>
+            <td>{{ scrEvent.eventName }}</td>
+            <td>{{ scrEvent.eventTime }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    {% if arNoEvents == False %}
+    <h1>Activity Room (Lower Level): </h1>
+    <br>
+    <table class="eventTable">
+        <tr>
+            <th>Event Title</th>
+            <th>Event Time</th>
+        </tr>
+        {% for arEvent in arEvents %}
+        <tr>
+            <td>{{ arEvent.eventName }}</td>
+            <td>{{ arEvent.eventTime }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+    <br>
+    <br>
+    <br>
+    <table class="wayfindingTable">
+        <tr>
+            <Td class="Arrow">&#11166</Td>
+            <Td class="direction">Reading Room</Td>
+        </tr>
+        <tr>
+            <Td class="Blank"></Td>
+            <Td class="direction-interior">Magazines</Td>
+        </tr>
+        <tr>
+            <Td class="Blank"></Td>
+            <Td class="direction-interior">Large Print</Td>
+        </tr>
+        <tr>
+            <Td class="Arrow">&#11164</Td>
+            <Td class="direction">Information Services</Td>
+        </tr>
+        <tr>
+            <Td class="Blank"></Td>
+            <Td class="direction-interior">Study Rooms</Td>
+        </tr>
+        <tr>
+            <Td class="Blank"></Td>
+            <Td class="direction-interior">Computers</Td>
+        </tr>
+        <tr>
+            <Td class="Blank"></Td>
+            <Td class="direction-interior">Books and Media</Td>
+        </tr>
+        <tr>
+            <Td class="Arrow">&#11167</Td>
+            <Td class="direction">Youth Services - Discovery Center</Td>
+        </tr>
+    </table>
+</body>
+</html>
