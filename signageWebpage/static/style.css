@@ -15,35 +15,41 @@ body
     text-shadow: black 1px 1px;
 }
 
-h1
+.roomTitle
 {
     text-align: center;
     font-size: 60px;
     padding: 0;
     margin: 0;
 }
-h2
+
+.noEventsMessage
 {
     text-align: center;
     font-size: 76px;
     color: #c53223;
 }
-h3
+.date
 {
-    font-size: 42px;
+    font-size: 55px;
     text-align: center;
 }
-th
+.nameHeader, .timeHeader
 {
   /*text-decoration: underline;*/
   padding: 10px;
   padding-bottom: 4px;
   color: #0298d2;
-    border-bottom: 7px solid #00b0d2;
+  border-bottom: 7px solid #00b0d2;
 }
 td
 {
-    /* border-bottom: 2px solid #f19238; */
+    font-family: Montserrat-thin, sans-serif;
+}
+
+.eventName, .eventTime
+{
+    border-bottom: 2px solid #f19238;
 }
 
 .eventTable, .wayfindingTable
@@ -55,7 +61,6 @@ td
 
 .direction-interior
 {
-    font-family: Montserrat-thin, sans-serif;
     border: none;
     text-align: left;
     padding-left: 300px;
@@ -75,7 +80,28 @@ td
     border-top: 2px solid #f19238;
 }
 
+#WayfindTop-Arrow, #WayfindTop-Direction
+{
+    border-top: 7px solid #0298d2;
+}
+
 .Blank
 {
     border-bottom: none;
+}
+
+@media screen and (max-width: 1080px)
+{
+    .roomTitle
+    {
+        font-size: 40px;
+    }
+    .date
+    {
+        font-size: 45px;
+    }
+    .eventTable, .wayfindingTable
+    {
+        font-size: 40px;
+    }
 }

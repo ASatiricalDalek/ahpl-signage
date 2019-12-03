@@ -117,6 +117,20 @@ def get_events_now(room):
     return finalEvents
 
 
+# For populating the list with fake events for testing purposes
+# Specify the number of fake events you want and the room they're in
+def get_fake_events(numberOfEvents, room):
+    fakeEvents = []
+    for i in range(0, numberOfEvents):
+        newEvent = ev()
+        newEvent.eventName = "Test Event with Really Long Title " + str(i)
+        newEvent.eventTime = "10:30\u201412:30"
+        newEvent.eventRoom = room
+        newEvent.eventDate = get_assabet_date()
+        fakeEvents.append(newEvent)
+    return fakeEvents
+
+
 def print_events(events):
     if len(events) == 0:
         print("No events")

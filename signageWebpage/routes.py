@@ -51,6 +51,14 @@ def all():
     date = scrape.get_assabet_date()
     logging.info("Event date " + str(date))
     logging.info("Getting events")
+
+    # For testing purposes, load the list with fake events #
+    # scrEvents = scrape.get_fake_events(3, scr)
+    # crEvents = scrape.get_fake_events(0, cr)
+    # arEvents = scrape.get_fake_events(2, ar)
+    # --------------------------------------------------- #
+
+
     scrEvents = scrape.get_events_now(scr)
     crEvents = scrape.get_events_now(cr)
     arEvents = scrape.get_events_now(ar)
@@ -58,5 +66,8 @@ def all():
     scrNoEvents = renderLogic.no_events_check(scrEvents)
     crNoEvents = renderLogic.no_events_check(crEvents)
     arNoEvents = renderLogic.no_events_check(arEvents)
+    allEvents = scrEvents + crEvents + arEvents
+    logging.info("Counting events")
+    allEventsCount = renderLogic.count_events(allEvents)
     return render_template("AllRooms.html", today=date, scrEvents=scrEvents, crEvents=crEvents, arEvents=arEvents,
-                           scrNoEvents=scrNoEvents, arNoEvents=arNoEvents, crNoEvents=crNoEvents)
+                           scrNoEvents=scrNoEvents, arNoEvents=arNoEvents, crNoEvents=crNoEvents, allEventsCount=allEventsCount)

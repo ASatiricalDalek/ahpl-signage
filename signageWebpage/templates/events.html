@@ -6,22 +6,22 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Events in the {{ room }} today: </h1>
+    <h1 class="roomTitle">Events in the {{ room }} today: </h1>
     <br>
     <h1 class="date">{{ today }}</h1>
     <br>
     {% if noEvents %}
-        <h2>No Events in this Room Today</h2>
+        <h2 class="noEventsMessage">No Events in this Room Today</h2>
     {% else %}
         <table class="eventTable">
         <tr>
-            <th>Event Title</th>
-            <th>Event Time</th>
+            <th class="nameHeader">Event Title</th>
+            <th class="timeHeader">Event Time</th>
         </tr>
         {% for event in events %}
         <tr>
-            <td>{{ event.eventName }}</td>
-            <td>{{ event.eventTime }}</td>
+            <td class="eventName">{{ event.eventName }}</td>
+            <td class="eventTime">{{ event.eventTime }}</td>
         </tr>
         {% endfor %}
         </table>
