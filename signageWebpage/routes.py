@@ -13,6 +13,7 @@ def storytime():
     logging.info("Getting events")
     events = scrape.get_events_now(room)
     logging.info("Checking to see if events were found...")
+    # Check to see if there are no events. Returns bool
     noEvents = renderLogic.no_events_check(events)
     return render_template("events.html", room=room, today=date, events=events, noEvents=noEvents)
 
@@ -58,7 +59,8 @@ def all():
     # arEvents = scrape.get_fake_events(2, ar)
     # --------------------------------------------------- #
 
-
+    # This logic is basically the same as above, only x3 for all rooms
+    # Some new variables, like allEventsCount and allEvents are created
     scrEvents = scrape.get_events_now(scr)
     crEvents = scrape.get_events_now(cr)
     arEvents = scrape.get_events_now(ar)

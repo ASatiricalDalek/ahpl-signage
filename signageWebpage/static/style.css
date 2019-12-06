@@ -90,6 +90,7 @@ td
     border-bottom: none;
 }
 
+/* For portrait orientation */
 @media screen and (max-width: 1080px)
 {
     .roomTitle

@@ -18,6 +18,7 @@
             <th class="nameHeader">Event Title</th>
             <th class="timeHeader">Event Time</th>
         </tr>
+        <!-- Generate table and populate with event information sourced from Assabet and piped in from Python -->
         {% for event in events %}
         <tr>
             <td class="eventName">{{ event.eventName }}</td>

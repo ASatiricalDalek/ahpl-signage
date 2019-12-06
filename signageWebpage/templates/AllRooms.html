@@ -7,6 +7,7 @@
 </head>
 <body>
     <h1 class="date">Today is {{ today }}</h1>
+    <!-- Only generate a room's table if there are events in that room -->
     {% if crNoEvents == False %}
     <h1 class="roomTitle">Community Room (Lower Level): </h1>
     <br>
@@ -64,13 +65,19 @@
     <br>
     <br>
     <br>
+    <!-- Wayfinding Directions -->
     <table class="wayfindingTable">
         <tr>
+            <!-- Unicode characters used for arrows. Should work by default on Windows 10+
+            May need to install fonts on linux. For apt based systems:
+            sudo apt-get install ttf-ancient-fonts -->
             <Td class="Arrow" id="WayfindTop-Arrow">&#11166</Td>
             <Td class="direction" id="WayfindTop-Direction">Reading Room</Td>
         </tr>
+        <!-- If there are more than 7 events, show truncated wayfinding sign -->
         {% if allEventsCount <= 7 %}
         <tr>
+            <!-- Add in a blank cell to the table to keep internal directions on the right -->
             <Td class="Blank"></Td>
             <Td class="direction-interior">Magazines</Td>
         </tr>
