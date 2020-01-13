@@ -69,7 +69,13 @@ def get_month_events(month, year):
             thisEvent.eventTime = listing.find('span', class_="event-time").string
             # This causes formatting issues with the log due to the - character
             # logging.debug(str(thisEvent.eventTime))
-            thisEvent.eventRoom = listing.find('span', class_="event-location-location").string
+            rooms = listing.find_all('span', class_="event-location-location")
+            # An event can be in multiple rooms, which we store in a list
+            stringRooms = []
+            for room in rooms:
+                stringRooms.append(room.next)
+            thisEvent.eventRoom = stringRooms
+            # thisEvent.eventRoom = listing.find('span', class_="event-location-location").string
             logging.debug(str(thisEvent.eventRoom))
             # Add this event to our list of event objects
             events.append(thisEvent)
@@ -98,12 +104,20 @@ def get_events_in_room(room, events):
     for event in events:
         logging.debug("Event room is: " + str(event.eventRoom))
         logging.debug("Searching for room: " + str(room))
-        if event.eventRoom == room:
+        # Check the list of rooms to see if the current room is listed. An event can be in multiple rooms
+        if room in event.eventRoom:
             logging.debug("Rooms match")
             roomsEvents.append(event)
         else:
             logging.debug("Our room, " + str(room) + " does not equal event's room " + str(event.eventRoom))
     return roomsEvents
+
+# Debug function
+def get_specific_event(eventName, events):
+    for event in events:
+        if event.eventName == eventName:
+            return event
+    return "Event Not Found"
 
 
 # "Helper" function to perform the most common use case for the program - getting events for today in specified room
@@ -125,7 +139,7 @@ def get_fake_events(numberOfEvents, room):
         newEvent = ev()
         newEvent.eventName = "Test Event with Really Long Title " + str(i)
         newEvent.eventTime = "10:30\u201412:30"
-        newEvent.eventRoom = room
+        newEvent.add_room(room)
         newEvent.eventDate = get_assabet_date()
         fakeEvents.append(newEvent)
     return fakeEvents
@@ -137,19 +151,8 @@ def print_events(events):
     else:
         for event in events:
             print("Name: ", event.eventName)
-            print("Room: ", event.eventRoom)
+            for room in event.eventRoom:
+                print("Room: ", room)
             print("Date: ", event.eventDate)
             print("Time: ", event.eventTime)
             print("")
-
-
-# dt = get_assabet_date()
-# evn = get_month_events("October", "2019")
-# tde = get_todays_events(dt, evn)
-# eir = get_events_in_room("Storytime Room", tde)
-# print_events(eir)
-
-todayEvents = get_events_now("Community Room")
-print_events(todayEvents)
-
-

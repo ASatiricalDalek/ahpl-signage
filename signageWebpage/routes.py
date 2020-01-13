@@ -3,7 +3,6 @@ from flask import render_template
 import logging
 
 
-
 @sw.route("/storytime")
 def storytime():
     room = "Activity Room"
