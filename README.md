@@ -13,6 +13,9 @@ at the Auburn Hills Public Library.
 
 
 # Change Log
+1/15/2020 -
+* Added support for events located in multiple rooms
+
 11/4/2019 - 
 
 * Fixed an issue on Linux systems where the leading 0 was not being correctly scrubbed from the date 
