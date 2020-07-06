@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Variable called app used for naming
-app="eventScreen"
+app="event-screen"
 # Builds the docker container with the tag as the variable val. Must run from dir w/ Dockerfile
 docker build -t ${app} .
 

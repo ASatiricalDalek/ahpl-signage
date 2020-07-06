@@ -9,13 +9,14 @@ import platform
 if platform.system() == "Windows":
     logging.basicConfig(filename="flaskdebug.log", level=logging.DEBUG)
 elif platform.system() == "Linux":
-    logging.basicConfig(filename="/var/www/ahpl-signage/flaskdebug.log", level=logging.DEBUG)
+    logging.basicConfig(filename="./flaskdebug.log", level=logging.DEBUG)
 
 
 def get_assabet_date():
     # Assabet displays the date in the "Day, Month Date" format. We get today's date in that format here
     logging.debug("Getting Assabet Friendly date")
     today = datetime.datetime.now()
+    logging.debug("Today is: " + str(today))
     # Linux and Windows require different format options to remove the leading zero, so depending on OS choose the
     os = platform.system()
     if os == "Windows":
