@@ -1,6 +1,6 @@
 # Room Availability Signage 
-The room availability signage is a custom Python Flask application which runs on an Apache2 web 
-server on an Ubuntu 18.04 LTS server (SignageServer). Its purpose is to display all the events, 
+The room availability signage is a custom Python Flask application which is designed to be run either on the metal
+of a Linux server, or in a Docker container. Its purpose is to display all the events, 
 and their times, for the day in a particular room. Any computer, such as a Raspberry Pi, 
 can then connect to the web page at the proper URL to display that room’s events.
 
@@ -11,8 +11,20 @@ the signage.
 The Room Availability Signage application was developed by Connor McNamara, Technology Coordinator
 at the Auburn Hills Public Library.
 
+## Windows Compatibility
+For the most part, it is assumed that the application is being run on a Linux server. The code was written on a 
+Windows machine, however, so it should be able to run on an IIS sever that is configured to deploy Flask applications.
+Something like the instructions from [this guide](https://stackoverflow.com/questions/5072166/how-do-i-deploy-a-flask-application-in-iis) 
+should work. 
+
+The Docker files are specifically designed to work with Linux. Again, there is no reason why they can't work with 
+Docker for Windows, but it would require creation of new start and stop scripts that are ported to Windows. 
 
 # Change Log
+7/6/2020 -
+* Containerized application (See Docker section below)
+* Added some additional logging to help debug an issue where dates were not being formatted correctly
+
 1/15/2020 -
 * Added support for events located in multiple rooms
 
@@ -44,6 +56,8 @@ Bits and pieces of the following tutorials and documentation were used in the cr
 [The Flask Mega Tutorial](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world)
 
 [Jinja2 Template Documentation](https://jinja.palletsprojects.com/en/2.10.x/templates/)
+
+[Deploying a Flask app on Docker](https://www.digitalocean.com/community/tutorials/how-to-build-and-deploy-a-flask-application-using-docker-on-ubuntu-18-04)
 
 
 # Python Code
@@ -155,3 +169,47 @@ With a list of Python objects representing all of our events for the month, it�
 Assabet displays the date in “day, month date” format (IE: Wednesday, October 23). With this knowledge, we can get today’s date and put it into a format that matches Assabet’s. This is done in the get_assabet_date() function. This is then passed to get_day_events to get the current events for today. If you want to use a different day, you can always pass in a string in the above format to get events for that day from a list.
 
 get_events_in_room functions almost identically, but in most cases the room is actually supplied in the route.py file. This is why it is vital to have the room string in the functions of route.py match exactly to the room name in Assabet. That value is simply passed into this function where it is compared against all the room properties of our Python objects.
+
+# Docker
+The event signage program uses Docker to run in a container, allowing it to be spun up easily on any VM or physical server.
+The requirements.txt, uwsgi.ini, start.sh, and stop.sh, in addition to the main Dockerfile, are all a part of this containerization.
+
+## Quick start
+To deploy the application on a Linux machine, [ensure that Docker is installed](https://docs.docker.com/engine/install/ubuntu/)
+and then run start.sh as administrator (likely something like sudo bash start.sh). 
+
+### More Details
+This script does a few things. First, it builds the Docker container based on the details specified in Dockerfile.  
+This reaches out to the Docker repository and pulls down an image preconfigured with
+an NGINX web server, Python, and a lightweight Alpine Linux distro. Starting with this image as a base means the majority
+of our configuration work is done.
+
+Next, bash and nano are installed in the container, and then we get to the Flask stuff. First, we set the Static URL and
+static path, these two variables are unique to this container and define where the "static" folder is. Flask cares a lot
+about this folder as that is where it will look for CSS stylesheets, images, and so on. These files cannot be arbitrarily
+placed inside the application, they must go in the static folder and that static folder must be located where these variables
+specify it is. 
+
+Static URL is the location of that folder on the source files (the present directory) while static path is where that
+file will be in the container.
+
+Next, the requirements.txt file is copied from the host machine into the container. This file contains references to all
+the Python libraries the application needs to run. Pip, the Python package manager, uses this file to install those
+dependencies inside the container. Pip is also updated as during development I was getting errors saying Pip was out of
+date.    
+
+After all this is done, the script starts the container in Daemon (background) mode, and mounts the directory with all
+the program files to the app directory in the container. This directory in the container is where the web server will
+listen for an application.
+
+The uwsgi.ini file is small, but mighty. This tells NGINX how to configure itself to accept the application. This works
+in conjunction with main.py, which imports the entire application as "app". App is what uwsgi.ini is expecting to find
+as the executable Flask program, so this name and flow is important, even if these two files seem arbitrary. 
+
+## Quick Stop
+With the container running, simply run stop.sh as administrator (likely something like sudo stop.sh)
+
+### More details
+stop.sh stops (kills) the container and removes it entirely. This allows for a (mostly) clean update when start.sh is 
+run. Keep in mind that we are mounting the directory into the container and not copying over the files, so the log
+will retain all of its previous information from past runs, for instance.  
